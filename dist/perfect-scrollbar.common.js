@@ -1,6 +1,6 @@
 /*!
- * perfect-scrollbar v1.5.0
- * Copyright 2020 Hyunje Jun, MDBootstrap and Contributors
+ * perfect-scrollbar v1.5.1
+ * Copyright 2021 Hyunje Jun, MDBootstrap and Contributors
  * Licensed under MIT
  */
 
@@ -325,8 +325,9 @@ function updateGeometry(i) {
   var roundedScrollTop = Math.floor(element.scrollTop);
   var rect = element.getBoundingClientRect();
 
-  i.containerWidth = Math.ceil(rect.width);
-  i.containerHeight = Math.ceil(rect.height);
+  i.containerWidth = Math.round(rect.width);
+  i.containerHeight = Math.round(rect.height);
+
   i.contentWidth = element.scrollWidth;
   i.contentHeight = element.scrollHeight;
 
@@ -477,7 +478,7 @@ function updateCss(element, i) {
 }
 
 function clickRail(i) {
-  var element = i.element;
+  i.element;
 
   i.event.bind(i.scrollbarY, 'mousedown', function (e) { return e.stopPropagation(); });
   i.event.bind(i.scrollbarYRail, 'mousedown', function (e) {
@@ -552,11 +553,12 @@ function bindMouseScrollHandler(
   var scrollBy = null;
 
   function mouseMoveHandler(e) {
+    var pageY_ = e[pageY];
     if (e.touches && e.touches[0]) {
-      e[pageY] = e.touches[0].pageY;
+      pageY_ = e.touches[0].pageY;
     }
     element[scrollTop] =
-      startingScrollTop + scrollBy * (e[pageY] - startingMousePageY);
+      startingScrollTop + scrollBy * (pageY_ - startingMousePageY);
     addScrollingClass(i, y);
     updateGeometry(i);
 
@@ -572,10 +574,11 @@ function bindMouseScrollHandler(
 
   function bindMoves(e, touchMode) {
     startingScrollTop = element[scrollTop];
+    var pageY_ = e[pageY];
     if (touchMode && e.touches) {
-      e[pageY] = e.touches[0].pageY;
+      pageY_ = e.touches[0].pageY;
     }
-    startingMousePageY = e[pageY];
+    startingMousePageY = pageY_;
     scrollBy =
       (i[contentHeight] - i[containerHeight]) /
       (i[railYHeight] - i[scrollbarYHeight]);
@@ -1080,6 +1083,11 @@ function touch(i) {
         }
 
         if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
+          clearInterval(easingLoop);
+          return;
+        }
+
+        if (!i.element) {
           clearInterval(easingLoop);
           return;
         }
