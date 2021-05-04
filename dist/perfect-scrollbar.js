@@ -1,5 +1,5 @@
 /*!
- * perfect-scrollbar v1.51.1
+ * perfect-scrollbar v1.51.2
  * Copyright 2021 Hyunje Jun, MDBootstrap and Contributors
  * Licensed under MIT
  */
