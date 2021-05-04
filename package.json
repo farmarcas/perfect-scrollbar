@@ -1,9 +1,11 @@
 {
   "name": "@farmarcas/perfect-scrollbar",
-  "version": "1.5.1",
+  "version": "1.51.1",
   "description": "Minimalistic but perfect custom scrollbar plugin",
   "authors": [
-    "Hyunje Jun <me@noraesae.net>",
+    "Hyunje Jun <me@noraesae.net>"
+  ],
+  "contributors": [
     "Victor Vuelma <vuelma@farmarcas.com.br>"
   ],
   "keywords": [
